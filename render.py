@@ -1,19 +1,20 @@
 import bpy
 
-# Define the coordinates of the vertices. Each vertex is defined by a tuple of 3 floats.
-coords=[(-1.0, -1.0, -1.0), (1.0, -1.0, -1.0), (1.0, 1.0 ,-1.0), \
-(-1.0, 1.0,-1.0), (0.0, 0.0, 1.0)]
 
-# Define the faces by index numbers of its vertices. Each face is defined by a tuple of 3 or more integers.
-# N-gons would require a tuple of size N.
-faces=[ (2,1,0,3), (0,1,4), (1,2,4), (2,3,4), (3,0,4)]
+iteration = [
+    [1,0,1,1,0,0,0,1],
+    [1,0,0,0,1,0,0,0],
+    [0,0,0,1,0,1,0,1],
+]
 
-me = bpy.data.meshes.new("PyramidMesh")   # create a new mesh
 
-ob = bpy.data.objects.new("Pyramid", me)          # create an object with that mesh
-ob.location = bpy.context.scene.cursor_location   # position object at 3d-cursor
-bpy.context.scene.objects.link(ob)                # Link object to scene
+def draw_iteration(iteration, level):
+    for row in range(len(iteration)):
+        for column in range(len(iteration[row])):
+            if iteration[row][column] is 1:
+                bpy.ops.mesh.primitive_cube_add(location=[row * 2,column * 2,level])
 
-# Fill the mesh with verts, edges, faces
-me.from_pydata(coords,[],faces)   # edges or faces should be [], or you ask for problems
-me.update(calc_edges=True)    # Update mesh with new data
+draw_iteration(iteration, 0)
+
+
+# exec(compile(open('/Users/johngunderman/src/golrender/render.py').read(), '/Users/johngunderman/src/golrender/render.py', 'exec'))
