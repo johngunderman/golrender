@@ -3,20 +3,27 @@ import copy
 
 
 iteration = [
-    [1,0,1,1,0,0,0,1],
-    [1,0,0,0,1,0,0,0],
-    [0,0,0,1,0,1,0,1],
+    [1,0,1,1,0,0],
+    [1,0,0,0,1,0],
+    [0,0,0,1,0,1],
+    [1,0,1,1,0,0],
+    [1,0,0,0,1,0],
+    [0,0,0,1,0,1],
 ]
 
 
 def draw_iteration(iteration, level):
     x_center = len(iteration) / 2.0
     y_center = len(iteration[0]) / 2.0
+    m = 2.1
     for row in range(len(iteration)):
         for column in range(len(iteration[row])):
             if iteration[row][column] is 1:
                 bpy.ops.mesh.primitive_cube_add(
-                    location=[(row - x_center) * 2, (column - y_center) * 2, level * 2])
+                    location=[
+                        (row - x_center) * m,
+                        (column - y_center) * m,
+                        level * m])
 
 def generate_next_iteration(current_iteration):
     new_iteration = copy.deepcopy(current_iteration)
@@ -62,8 +69,12 @@ def get_neighbor_count(iteration, row, column):
         count += 1
     return count
 
-draw_iteration(iteration, 0)
-next_iteration = generate_next_iteration(iteration)
-draw_iteration(next_iteration, 1);
+
+def draw_generations(gen, iteration_count):
+    for i in range(iteration_count):
+        draw_iteration(gen, i)
+        gen = generate_next_iteration(gen)
+
+draw_generations(iteration, 5)
 
 # exec(compile(open('/Users/johngunderman/src/golrender/render.py').read(), '/Users/johngunderman/src/golrender/render.py', 'exec'))
