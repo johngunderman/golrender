@@ -39,7 +39,26 @@ def generate_next_iteration(current_iteration):
         # Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
 def get_neighbor_count(iteration, row, column):
-    return 0
+    count = 0
+    max_row = len(iteration) - 2
+    max_col = len(iteration[0]) - 2
+    # D: D:
+    if iteration[row][column - 1] is 1 and column  >= 1:
+        count++
+    if iteration[row][column + 1] is 1 and column <= max_col
+        count++
+    if iteration[row - 1][column] is 1 and row >= 1:
+        count++
+    if iteration[row + 1][column] is 1 and row <= max_row:
+        count++
+    if iteration[row - 1][column - 1] is 1 and row >= 1 and column >= 1:
+        count++
+    if iteration[row + 1][column - 1] is 1 and row <= max_row and column >= 1:
+        count++
+    if iteration[row - 1][column + 1] is 1 and row >= 1 and column <= max_col:
+        count++
+    if iteration[row + 1][column + 1] is 1 and row <= max_row and column <= max_col:
+        count++
 
 draw_iteration(iteration, 0)
 
