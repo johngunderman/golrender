@@ -37,6 +37,7 @@ def generate_next_iteration(current_iteration):
         if current_iteration[row][column] is 0 and neighbor_count is 3:
             new_iteration[row][column] = 1
         # Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+    return new_iteration
 
 def get_neighbor_count(iteration, row, column):
     count = 0
