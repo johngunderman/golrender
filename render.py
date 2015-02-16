@@ -23,7 +23,15 @@ def draw_iteration(iteration, level):
                     location=[
                         (row - x_center) * m,
                         (column - y_center) * m,
-                        level * m])
+                        (level * m) + 1])
+
+# def draw_frame(height, width, length):
+#     for r in range(width):
+#         for c in range(height):
+#     bpy.ops.mesh.primitive_cylinder_add(
+#         radius=.05,
+#         depth=10,
+#         location=(r, c, height))
 
 def generate_next_iteration(current_iteration):
     new_iteration = copy.deepcopy(current_iteration)
@@ -69,12 +77,23 @@ def get_neighbor_count(iteration, row, column):
         count += 1
     return count
 
+def count_total_blocks(state, iteration_count):
+    count = 0
+    for i in range(iteration_count):
+        count += count_blocks_in_iteration(state)
+        state = generate_next_iteration(state)
+    return count
+
+def count_blocks_in_iteration(iteration):
+    return sum(map(sum, iteration))
 
 def draw_generations(gen, iteration_count):
     for i in range(iteration_count):
         draw_iteration(gen, i)
         gen = generate_next_iteration(gen)
 
+#draw_frame(5, 5, 5)
 draw_generations(iteration, 5)
+print(count_total_blocks(iteration, 5))
 
 # exec(compile(open('/Users/johngunderman/src/golrender/render.py').read(), '/Users/johngunderman/src/golrender/render.py', 'exec'))
